@@ -5,6 +5,10 @@ on:
   workflow_dispatch:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   android:
     name: Android
@@ -49,4 +53,3 @@ jobs:
           arch: x86_64
           script: |
             ANDROID_SDK_VERSION=${{ matrix.android-api }} skip android test --android-api-level ${{ matrix.android-api }} --apk --verbose
-
